@@ -21,7 +21,7 @@ class TankDrive(Command):
         Constructor
         '''
         super().__init__(name, timeout)
-        self.robot = robot;
+        self.robot = robot
         self.requires(robot.drivetrain)
 
     def initialize(self):

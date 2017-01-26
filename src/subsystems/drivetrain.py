@@ -56,7 +56,7 @@ class Drivetrain(Subsystem):
     _pitch_gyro_angle = 0.0
 
     def __init__(self, robot, name = None, configfile = '/home/lvuser/configs/subsystems.ini'):
-        self._robot = robot;
+        self._robot = robot
         self._config = configparser.ConfigParser()
         self._config.read(configfile)
         self._load_general_config()

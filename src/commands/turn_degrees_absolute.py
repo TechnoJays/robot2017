@@ -14,7 +14,7 @@ class TurnDegreesAbsolute(Command):
         Constructor
         '''
         super().__init__(name, timeout)
-        self.robot = robot;
+        self.robot = robot
         self.requires(robot.drivetrain)
         self._target_degrees = degrees_target
         self._speed = speed

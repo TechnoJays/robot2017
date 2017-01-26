@@ -4,7 +4,6 @@ import wpilib
 from commands.do_nothing import DoNothing
 from oi import OI
 from subsystems.drivetrain import Drivetrain
-from commands.auto_mode import AutoCommandGroup
 
 
 class MyRobot(wpilib.IterativeRobot):
@@ -15,7 +14,7 @@ class MyRobot(wpilib.IterativeRobot):
         #Schedule the autonomous command
         self.drivetrain.reset_gyro_angle()
         if self.oi.get_auto_choice() == 1:
-			pass
+            self.autonomous_command = DoNothing(self)
         else:
             self.autonomous_command = DoNothing(self)
         self.autonomous_command.start()
@@ -41,8 +40,6 @@ class MyRobot(wpilib.IterativeRobot):
         self.drivetrain = Drivetrain(self)
 
         self.oi.setup_button_bindings()
-
-        self.autonomous_command = AutoCommandGroup(self)
 
     def autonomousPeriodic(self):
         """This function is called periodically during autonomous."""

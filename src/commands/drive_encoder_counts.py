@@ -15,7 +15,7 @@ class DriveEncoderCounts(Command):
         Constructor
         '''
         super().__init__(name, timeout)
-        self.robot = robot;
+        self.robot = robot
         self.requires(robot.drivetrain)
         self._encoder_change = encoder_change
         self._speed = speed
