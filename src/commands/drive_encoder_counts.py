@@ -1,19 +1,15 @@
 from wpilib.command.command import Command
 import math
 
+
 class DriveEncoderCounts(Command):
-    '''
-    classdocs
-    '''
     _speed = None
     _encoder_threshold = None
     _encoder_change = None
     _target_position = None
 
     def __init__(self, robot, encoder_change, speed, threshold, name=None, timeout=15):
-        '''
-        Constructor
-        '''
+        """Constructor"""
         super().__init__(name, timeout)
         self.robot = robot
         self.requires(robot.drivetrain)
@@ -35,10 +31,7 @@ class DriveEncoderCounts(Command):
         current = self.robot.drivetrain.get_encoder_value()
         distance_left = self._target_position - current
         # Determine direction using target and current encoder values
-        if (distance_left) >= 0:
-            direction = -1.0
-        else:
-            direction = 1.0
+        direction = -1.0 if distance_left >= 0 else direction = 1.0
         linear_drive_amount = self._speed * direction
         # Set drivetrain using speed and direction
         self.robot.drivetrain.arcade_drive(linear_drive_amount, 0.0)

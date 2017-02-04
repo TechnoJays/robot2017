@@ -1,18 +1,14 @@
 from wpilib.command.command import Command
 import math
 
+
 class TurnDegreesAbsolute(Command):
-    '''
-    classdocs
-    '''
     _speed = None
     _degree_threshold = None
     _target_degrees = None
 
     def __init__(self, robot, degrees_target, speed, threshold, name=None, timeout=15):
-        '''
-        Constructor
-        '''
+        """Constructor"""
         super().__init__(name, timeout)
         self.robot = robot
         self.requires(robot.drivetrain)
@@ -28,10 +24,7 @@ class TurnDegreesAbsolute(Command):
         """Called repeatedly when this Command is scheduled to run"""
         current = self.robot.drivetrain.get_gyro_angle()
         degrees_left = self._target_degrees - current
-        if (degrees_left) >= 0:
-            direction = 1.0
-        else:
-            direction = -1.0
+        direction = 1.0 if degrees_left >= 0 else direction = -1.0
         turn_speed = self._speed * direction
         # Set drivetrain using speed and direction
         self.robot.drivetrain.arcade_drive(0.0, turn_speed)

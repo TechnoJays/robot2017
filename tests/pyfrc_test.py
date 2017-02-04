@@ -4,4 +4,3 @@
 '''
 
 from pyfrc.tests import *
-

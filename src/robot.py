@@ -1,6 +1,5 @@
 from wpilib import command
 import wpilib
-
 from commands.do_nothing import DoNothing
 from oi import OI
 from subsystems.drivetrain import Drivetrain
@@ -9,9 +8,10 @@ from subsystems.drivetrain import Drivetrain
 class MyRobot(wpilib.IterativeRobot):
     oi = None
     drivetrain = None
+    autonomous_command = None
 
     def autonomousInit(self):
-        #Schedule the autonomous command
+        # Schedule the autonomous command
         self.drivetrain.reset_gyro_angle()
         if self.oi.get_auto_choice() == 1:
             self.autonomous_command = DoNothing(self)
@@ -21,8 +21,6 @@ class MyRobot(wpilib.IterativeRobot):
 
     def testInit(self):
         pass
-
-    # Subsystems
 
     def teleopInit(self):
         self.autonomous_command.cancel()
@@ -38,7 +36,6 @@ class MyRobot(wpilib.IterativeRobot):
         """
         self.oi = OI(self)
         self.drivetrain = Drivetrain(self)
-
         self.oi.setup_button_bindings()
 
     def autonomousPeriodic(self):

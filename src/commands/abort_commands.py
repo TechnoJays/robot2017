@@ -5,9 +5,7 @@ class Abort(Command):
     _ran_once = False
 
     def __init__(self, robot, name=None, timeout=None):
-        '''
-        Constructor
-        '''
+        """Constructor"""
         super().__init__(name, timeout)
         self.robot = robot
         self.requires(robot.drivetrain)
@@ -18,7 +16,7 @@ class Abort(Command):
 
     def execute(self):
         """Called repeatedly when this Command is scheduled to run"""
-        self.robot.drivetrain.arcade_drive(0,0)
+        self.robot.drivetrain.arcade_drive(0, 0)
         self._ran_once = True
 
     def isFinished(self):

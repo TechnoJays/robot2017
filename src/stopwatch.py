@@ -1,6 +1,3 @@
-"""This module provides a stopwatch timing class."""
-
-# Imports
 import time
 
 
@@ -10,11 +7,6 @@ class Stopwatch(object):
     This class provides simple time keeping functionality like a stopwatch.
 
     """
-    # Public member variables
-
-    # Private member objects
-
-    # Private member variables
     _running = False
     _start = None
     _end = None

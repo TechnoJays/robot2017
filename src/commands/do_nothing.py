@@ -1,19 +1,11 @@
-'''
-Created on Jan 30, 2016
-
-@author: tylerstrayer
-'''
 from wpilib.command.command import Command
 
 
 class DoNothing(Command):
     
     def __init__(self, robot, name=None, timeout=15):
-        '''
-        Constructor
-        '''
+        """Constructor"""
         super().__init__(name, timeout)
-        pass
 
     def initialize(self):
         """Called before the Command is run for the first time."""
@@ -34,4 +26,3 @@ class DoNothing(Command):
     def interrupted(self):
         """Called when another command which requires one or more of the same subsystems is scheduled to run"""
         pass
-    

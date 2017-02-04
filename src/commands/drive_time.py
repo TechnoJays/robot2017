@@ -1,19 +1,15 @@
 from wpilib.command.command import Command
 from stopwatch import Stopwatch
 
+
 class DriveTime(Command):
-    '''
-    classdocs
-    '''
     _stopwatch = None
     _start_time = None
     _duration = None
     _speed = None
 
     def __init__(self, robot, duration, speed, name=None, timeout=15):
-        '''
-        Constructor
-        '''
+        """Constructor"""
         super().__init__(name, timeout)
         self.robot = robot
         self.requires(robot.drivetrain)
@@ -30,7 +26,6 @@ class DriveTime(Command):
     def execute(self):
         """Called repeatedly when this Command is scheduled to run"""
         speed = self._speed
-        time_left = self._duration - self._stopwatch.elapsed_time_in_secs()
         self.robot.drivetrain.arcade_drive(speed, 0.0)
         return Command.execute(self)
 

@@ -1,25 +1,12 @@
-'''
-Created on Jan 23, 2016
-
-@author: Ty Strayer
-'''
-
 from wpilib.command.command import Command
-
 from oi import JoystickAxis, UserController
 
 
 class TankDrive(Command):
-    '''
-    classdocs
-    '''
-    _config = None
     DPAD_LINEAR_SPEED = 0.75
 
     def __init__(self, robot, name=None, timeout=15):
-        '''
-        Constructor
-        '''
+        """Constructor"""
         super().__init__(name, timeout)
         self.robot = robot
         self.requires(robot.drivetrain)
