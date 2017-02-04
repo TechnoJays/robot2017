@@ -44,7 +44,8 @@ class OI:
     _controllers = []
     _auto_program_chooser = None
 
-    def __init__(self, robot, configfile='/home/lvuser/configs/joysticks.ini', command_config='/home/lvuser/configs/commands.ini'):
+    # Config path used to be '/home/lvuser/configs/subsystems.ini'
+    def __init__(self, robot, configfile='../src/configs/joysticks.ini', command_config='../src/configs/commands.ini'):
         self.robot = robot
         self._config = configparser.ConfigParser()
         self._config.read(configfile)
@@ -118,6 +119,7 @@ class OI:
         return stick
 
     def _init_joystick_binding(self):
+        print(self._config.sections())
         axis_binding_section = "AxisBindings"
         JoystickAxis.LEFTX = self._config.getint(axis_binding_section, "LEFTX")
         JoystickAxis.LEFTY = self._config.getint(axis_binding_section, "LEFTY")
