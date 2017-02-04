@@ -49,21 +49,21 @@ def mock_oi(robot):
 
 
 @pytest.fixture(scope="function")
-def command_default(robot, drivetrain_def):
-    robot.drivetrain = drivetrain_def
+def command_default(robot, drivetrain_default):
+    robot.drivetrain = drivetrain_default
     return TankDrive(robot, None, None)
 
 
-def test_init_default(command_def):
-    assert command_def is not None
-    assert command_def.robot is not None
-    assert command_def.robot.drivetrain is not None
-    assert command_def.name == "TankDrive"
-    assert command_def.timeout is None
+def test_init_default(command_default):
+    assert command_default is not None
+    assert command_default.robot is not None
+    assert command_default.robot.drivetrain is not None
+    assert command_default.name == "TankDrive"
+    assert command_default.timeout is None
 
 
-def test_init_full(robot, drivetrain_def):
-    robot.drivetrain = drivetrain_def
+def test_init_full(robot, drivetrain_default):
+    robot.drivetrain = drivetrain_default
     td = TankDrive(robot, "CustomTankDrive", 5)
     assert td is not None
     assert td.robot is not None
@@ -72,7 +72,7 @@ def test_init_full(robot, drivetrain_def):
     assert td.timeout == 5
 
 
-def test_initialize(command_def):
+def test_initialize(command_default):
     pass  # initialize method is empty
 
 
@@ -83,8 +83,8 @@ def test_initialize(command_def):
     (-0.5, -0.5, -0.5, 0.5),
     (-1.0, -1.0, -1.0, 1.0),
 ])
-def test_execute(mock_oi, drivetrain_def, robot, hal_data, left_speed, right_speed, left_ex_speed, right_ex_speed):
-    robot.drivetrain = drivetrain_def
+def test_execute(mock_oi, drivetrain_default, robot, hal_data, left_speed, right_speed, left_ex_speed, right_ex_speed):
+    robot.drivetrain = drivetrain_default
     robot.oi = mock_oi
     td = TankDrive(robot, None, None)
     assert td is not None
@@ -95,13 +95,13 @@ def test_execute(mock_oi, drivetrain_def, robot, hal_data, left_speed, right_spe
     assert hal_data['pwm'][2]['value'] == right_ex_speed
 
 
-def test_is_finished(command_def):
-    assert command_def.isFinished() is False
+def test_is_finished(command_default):
+    assert command_default.isFinished() is False
 
 
-def test_interrupted(command_def):
+def test_interrupted(command_default):
     pass  # interrupted method is empty
 
 
-def test_end(command_def):
+def test_end(command_default):
     pass  # end method is empty

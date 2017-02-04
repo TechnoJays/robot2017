@@ -23,7 +23,7 @@ class TankDrive(Command):
         else:
             left_track = self.robot.oi.get_axis(UserController.DRIVER, JoystickAxis.LEFTY)
             right_track = self.robot.oi.get_axis(UserController.DRIVER, JoystickAxis.RIGHTY)
-            self.robot.drivetrain.tankDrive(left_track, right_track)
+            self.robot.drivetrain.tank_drive(left_track, right_track)
         return Command.execute(self)
 
     def isFinished(self):
