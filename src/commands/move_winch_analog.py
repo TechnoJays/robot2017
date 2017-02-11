@@ -6,6 +6,8 @@ from oi import UserController, JoystickAxis
 
 class MoveWinchAnalog(Command):
 
+    JOYSTICK_LINEAR_SPEED = 1.0
+
     def __init__(self, robot, name=None, timeout=None):
         '''
         Constructor
@@ -21,7 +23,7 @@ class MoveWinchAnalog(Command):
     def execute(self):
         """Called repeatedly when this Command is scheduled to run"""
         move_speed = self._robot.oi.get_axis(UserController.SCORING, JoystickAxis.RIGHTX)
-        self._robot.winch.move_winch(move_speed)
+        self._robot.winch.move_winch(move_speed * self.JOYSTICK_LINEAR_SPEED)
 
     def isFinished(self):
         """Returns true when the Command no longer needs to be run"""
