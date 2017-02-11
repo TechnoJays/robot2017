@@ -3,11 +3,13 @@ import wpilib
 from commands.do_nothing import DoNothing
 from oi import OI
 from subsystems.drivetrain import Drivetrain
+from subsystems.winch import Winch
 
 
 class MyRobot(wpilib.IterativeRobot):
     oi = None
     drivetrain = None
+    winch = None
     autonomous_command = None
 
     def autonomousInit(self):
@@ -37,6 +39,7 @@ class MyRobot(wpilib.IterativeRobot):
         """
         self.oi = OI(self)
         self.drivetrain = Drivetrain(self)
+        self.winch = Winch(self)
         self.oi.setup_button_bindings()
 
     def autonomousPeriodic(self):
