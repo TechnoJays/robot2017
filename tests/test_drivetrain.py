@@ -41,11 +41,11 @@ def test_drivetrain_channels_0_1(hal_data, robot):
     assert dt._robot_drive is not None
     assert hal_data['pwm'][0]['initialized'] is True
     assert hal_data['pwm'][0]['value'] == 0.0
-    assert hal_data['pwm'][0]['type'] == 'talon'
+    assert hal_data['pwm'][0]['type'] == 'victorsp'
     assert hal_data['pwm'][0]['zero_latch'] is True
     assert hal_data['pwm'][1]['initialized'] is True
     assert hal_data['pwm'][1]['value'] == 0.0
-    assert hal_data['pwm'][1]['type'] == 'talon'
+    assert hal_data['pwm'][1]['type'] == 'victorsp'
     assert hal_data['pwm'][1]['zero_latch'] is True
     assert hal_data['pwm'][2]['initialized'] is False
 
@@ -59,11 +59,11 @@ def test_drivetrain_channels_1_2(hal_data, robot):
     assert hal_data['pwm'][0]['initialized'] is False
     assert hal_data['pwm'][1]['initialized'] is True
     assert hal_data['pwm'][1]['value'] == 0.0
-    assert hal_data['pwm'][1]['type'] == 'talon'
+    assert hal_data['pwm'][1]['type'] == 'victorsp'
     assert hal_data['pwm'][1]['zero_latch'] is True
     assert hal_data['pwm'][2]['initialized'] is True
     assert hal_data['pwm'][2]['value'] == 0.0
-    assert hal_data['pwm'][2]['type'] == 'talon'
+    assert hal_data['pwm'][2]['type'] == 'victorsp'
     assert hal_data['pwm'][2]['zero_latch'] is True
     assert hal_data['pwm'][3]['initialized'] is False
 
@@ -152,11 +152,11 @@ def test_drivetrain_left_inverted(hal_data, robot):
     assert dt._robot_drive is not None
     assert hal_data['pwm'][1]['initialized'] is True
     assert hal_data['pwm'][1]['value'] == 0.0
-    assert hal_data['pwm'][1]['type'] == 'talon'
+    assert hal_data['pwm'][1]['type'] == 'victorsp'
     assert hal_data['pwm'][1]['zero_latch'] is True
     assert hal_data['pwm'][2]['initialized'] is True
     assert hal_data['pwm'][2]['value'] == 0.0
-    assert hal_data['pwm'][2]['type'] == 'talon'
+    assert hal_data['pwm'][2]['type'] == 'victorsp'
     assert hal_data['pwm'][2]['zero_latch'] is True
     assert dt._left_motor.getInverted() is True
     assert dt._right_motor.getInverted() is False
@@ -170,11 +170,11 @@ def test_drivetrain_right_inverted(hal_data, robot):
     assert dt._robot_drive is not None
     assert hal_data['pwm'][1]['initialized'] is True
     assert hal_data['pwm'][1]['value'] == 0.0
-    assert hal_data['pwm'][1]['type'] == 'talon'
+    assert hal_data['pwm'][1]['type'] == 'victorsp'
     assert hal_data['pwm'][1]['zero_latch'] is True
     assert hal_data['pwm'][2]['initialized'] is True
     assert hal_data['pwm'][2]['value'] == 0.0
-    assert hal_data['pwm'][2]['type'] == 'talon'
+    assert hal_data['pwm'][2]['type'] == 'victorsp'
     assert hal_data['pwm'][2]['zero_latch'] is True
     assert dt._left_motor.getInverted() is False
     assert dt._right_motor.getInverted() is True

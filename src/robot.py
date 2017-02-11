@@ -23,7 +23,8 @@ class MyRobot(wpilib.IterativeRobot):
         pass
 
     def teleopInit(self):
-        self.autonomous_command.cancel()
+        if self.autonomous_command:
+            self.autonomous_command.cancel()
         self.teleopInitialized = True
 
     def disabledInit(self):
