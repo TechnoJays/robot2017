@@ -119,7 +119,6 @@ class OI:
         return stick
 
     def _init_joystick_binding(self):
-        print(self._config.sections())
         axis_binding_section = "AxisBindings"
         JoystickAxis.LEFTX = self._config.getint(axis_binding_section, "LEFTX")
         JoystickAxis.LEFTY = self._config.getint(axis_binding_section, "LEFTY")
