@@ -1,7 +1,7 @@
 import pytest
 from subsystems.drivetrain import Drivetrain
 
-'''
+"""
 hal_data['pwm'] looks like this:
 [{
     'zero_latch': False,
@@ -18,7 +18,7 @@ hal_data['pwm'] looks like this:
     'period_scale': 0,
     'type': 'talon'
 },...]
-'''
+"""
 
 
 @pytest.fixture(scope="function")

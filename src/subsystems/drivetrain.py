@@ -121,9 +121,9 @@ class Drivetrain(Subsystem):
         self._update_smartdashboard_sensors()
         return self._gyro_angle
 
-    def arcade_drive(self, linear_distance, turn_angle):
+    def arcade_drive(self, linear_distance, turn_angle, squared_inputs=True):
         if self._robot_drive:
-            self._robot_drive.arcadeDrive(linear_distance, turn_angle)
+            self._robot_drive.arcadeDrive(linear_distance, turn_angle, squared_inputs)
         self._update_smartdashboard_arcade_drive(linear_distance, turn_angle)
         self.get_gyro_angle()
         self.get_left_encoder_value()

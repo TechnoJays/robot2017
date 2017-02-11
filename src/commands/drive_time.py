@@ -26,7 +26,7 @@ class DriveTime(Command):
     def execute(self):
         """Called repeatedly when this Command is scheduled to run"""
         speed = self._speed
-        self.robot.drivetrain.arcade_drive(speed, 0.0)
+        self.robot.drivetrain.arcade_drive(speed, 0.0, False)
         return Command.execute(self)
 
     def isFinished(self):
