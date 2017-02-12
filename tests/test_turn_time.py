@@ -75,6 +75,7 @@ def test_execute(robot, drivetrain_default, hal_data, speed, left_ex_speed, righ
     robot.drivetrain = drivetrain_default
     dt = TurnTime(robot, 5, speed, "CustomTurnTime", 15)
     assert dt is not None
+    dt.initialize()
     dt.execute()
     assert hal_data['pwm'][1]['value'] == left_ex_speed
     assert hal_data['pwm'][2]['value'] == right_ex_speed
