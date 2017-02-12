@@ -26,7 +26,7 @@ class TurnTime(Command):
     def execute(self):
         """Called repeatedly when this Command is scheduled to run"""
         speed = self._speed
-        self.robot.drivetrain.arcade_drive(0.0, speed)
+        self.robot.drivetrain.arcade_drive(0.0, speed, False)
         return Command.execute(self)
 
     def isFinished(self):
