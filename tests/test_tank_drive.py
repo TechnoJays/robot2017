@@ -88,6 +88,7 @@ def test_execute(mock_oi, drivetrain_default, robot, hal_data, left_speed, right
     robot.oi = mock_oi
     td = TankDrive(robot, None, None)
     assert td is not None
+    td.initialize()
     mock_oi.set_mock_axis_value(oi.UserController.DRIVER, oi.JoystickAxis.LEFTY, left_speed)
     mock_oi.set_mock_axis_value(oi.UserController.DRIVER, oi.JoystickAxis.RIGHTY, right_speed)
     td.execute()

@@ -1,5 +1,5 @@
 import pytest
-from commands.drive_time import DriveTime
+from commands.turn_time import TurnTime
 from subsystems.drivetrain import Drivetrain
 from stopwatch import Stopwatch
 
@@ -32,7 +32,7 @@ def drivetrain_default(robot):
 @pytest.fixture(scope="function")
 def command_default(robot, drivetrain_default):
     robot.drivetrain = drivetrain_default
-    return DriveTime(robot, 5, 1.0, None, None)
+    return TurnTime(robot, 5, 1.0, None, 15)
 
 
 def test_init_default(command_default):
@@ -40,20 +40,20 @@ def test_init_default(command_default):
     assert command_default.robot is not None
     assert command_default.robot.drivetrain is not None
     assert command_default._stopwatch is not None
-    assert command_default.name == "DriveTime"
-    assert command_default.timeout is None
+    assert command_default.name == "TurnTime"
+    assert command_default.timeout == 15
     assert command_default._duration == 5
     assert command_default._speed == 1.0
 
 
 def test_init_full(robot, drivetrain_default):
     robot.drivetrain = drivetrain_default
-    dt = DriveTime(robot, 10, 0.5, "CustomDriveTime", 5)
+    dt = TurnTime(robot, 10, 0.5, "CustomTurnTime", 5)
     assert dt is not None
     assert dt.robot is not None
     assert dt.robot.drivetrain is not None
     assert dt._stopwatch is not None
-    assert dt.name == "CustomDriveTime"
+    assert dt.name == "CustomTurnTime"
     assert dt.timeout == 5
     assert dt._duration == 10
     assert dt._speed == 0.5
@@ -66,14 +66,14 @@ def test_initialize(command_default):
 
 @pytest.mark.parametrize("speed,left_ex_speed,right_ex_speed", [
     (0.0, 0.0, 0.0),
-    (0.5, 0.5, -0.5),
-    (1.0, 1.0, -1.0),
-    (-0.5, -0.5, 0.5),
-    (-1.0, -1.0, 1.0),
+    (0.5, -0.5, -0.5),
+    (1.0, -1.0, -1.0),
+    (-0.5, 0.5, 0.5),
+    (-1.0, 1.0, 1.0),
 ])
 def test_execute(robot, drivetrain_default, hal_data, speed, left_ex_speed, right_ex_speed):
     robot.drivetrain = drivetrain_default
-    dt = DriveTime(robot, 5, speed, "CustomDriveTime", 15)
+    dt = TurnTime(robot, 5, speed, "CustomTurnTime", 15)
     assert dt is not None
     dt.initialize()
     dt.execute()
@@ -100,14 +100,15 @@ def isclose(a, b, rel_tol=0.1, abs_tol=0.0):
     return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
 
-@pytest.mark.parametrize("duration,speed,timeout,left_ex_speed,right_ex_speed", [
-    (0.5, 0.5, 5.0, 0.5, -0.5),
-    (2.0, 1.0, 15.0, 1.0, -1.0),
+@pytest.mark.parametrize("duration,timeout, speed,left_ex_speed,right_ex_speed", [
+    (0.5, 5.0, 0.5, -0.5, -0.5),
+    (0.5, 5.0, -0.5, 0.5, 0.5),
+    (2.0, 15.0, 1.0, -1.0, -1.0),
     # (5.0, 1.0, 1.0, 1.0, -1.0), # Timeouts don't seem to work in testing
 ])
-def test_command_full(robot, drivetrain_default, hal_data, duration, speed, timeout, left_ex_speed, right_ex_speed):
+def test_command_full(robot, drivetrain_default, hal_data, duration, timeout, speed, left_ex_speed, right_ex_speed):
     robot.drivetrain = drivetrain_default
-    dt = DriveTime(robot, duration, speed, "CustomDriveTime", timeout)
+    dt = TurnTime(robot, duration, speed, "CustomTurnTime", timeout)
     sw = Stopwatch()
     assert dt is not None
     dt.initialize()
