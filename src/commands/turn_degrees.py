@@ -35,7 +35,7 @@ class TurnDegrees(Command):
             direction = -1.0
         turn_speed = self._speed * direction
         # Set drivetrain using speed and direction
-        self.robot.drivetrain.arcade_drive(0.0, turn_speed)
+        self.robot.drivetrain.arcade_drive(0.0, turn_speed, False)
         return Command.execute(self)
 
     def isFinished(self):
