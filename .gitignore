@@ -68,3 +68,6 @@ target/
 # apple crap
 .DS_Store
 
+# PyCharm
+.idea
+
