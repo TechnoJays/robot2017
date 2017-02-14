@@ -7,7 +7,7 @@ class MoveWinchAnalog(Command):
 
     def __init__(self, robot, name=None, timeout=None):
         super().__init__(name, timeout)
-        self._robot = robot
+        self.robot = robot
         self.requires(robot.winch)
 
     def initialize(self):
@@ -16,8 +16,8 @@ class MoveWinchAnalog(Command):
 
     def execute(self):
         """Called repeatedly when this Command is scheduled to run"""
-        move_speed = self._robot.oi.get_axis(UserController.SCORING, JoystickAxis.RIGHTY)
-        self._robot.winch.move_winch(move_speed * self.JOYSTICK_LINEAR_SPEED)
+        move_speed = self.robot.oi.get_axis(UserController.SCORING, JoystickAxis.RIGHTY)
+        self.robot.winch.move_winch(move_speed * self.JOYSTICK_LINEAR_SPEED)
 
     def isFinished(self):
         """Returns true when the Command no longer needs to be run"""
@@ -25,7 +25,7 @@ class MoveWinchAnalog(Command):
 
     def end(self):
         """Called once after isFinished returns true"""
-        self._robot.winch.move_winch(0)
+        self.robot.winch.move_winch(0)
         pass
 
     def interrupted(self):
