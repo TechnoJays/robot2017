@@ -10,6 +10,13 @@ class Winch(Subsystem):
     # Config file section names
     _motor_section = "WinchMotor"
     _encoder_section = "WinchEncoder"
+    _enabled_key = "ENABLED"
+    _a_channel_key = "A_CHANNEL"
+    _b_channel_key = "B_CHANNEL"
+    _inverted_key = "INVERTED"
+    _type_key = "TYPE"
+    _channel_key = "CHANNEL"
+    _reversed_key = "REVERSED"
 
     _robot = None
     _config = None
@@ -52,16 +59,16 @@ class Winch(Subsystem):
         SmartDashboard.putNumber("Winch Speed", speed)
 
     def _init_components(self):
-        if self._config.getboolean(Winch._motor_section, "MOTOR_ENABLED"):
-            motor_channel = self._config.getint(Winch._motor_section, "MOTOR_CHANNEL")
-            motor_inverted = self._config.getboolean(Winch._motor_section, "MOTOR_INVERTED")
+        if self._config.getboolean(Winch._motor_section, Winch._enabled_key):
+            motor_channel = self._config.getint(Winch._motor_section, Winch._channel_key)
+            motor_inverted = self._config.getboolean(Winch._motor_section, Winch._inverted_key)
             self._motor = Spark(motor_channel)
             if self._motor:
                 self._motor.setInverted(motor_inverted)
 
-        if self._config.getboolean(Winch._encoder_section, "ENCODER_ENABLED"):
-            encoder_a_channel = self._config.getint(Winch._encoder_section, "ENCODER_A_CHANNEL")
-            encoder_b_channel = self._config.getint(Winch._encoder_section, "ENCODER_B_CHANNEL")
-            encoder_inverted = self._config.getboolean(Winch._encoder_section, "ENCODER_REVERSED")
-            encoder_type = self._config.getint(Winch._encoder_section, "ENCODER_TYPE")
+        if self._config.getboolean(Winch._encoder_section, Winch._enabled_key):
+            encoder_a_channel = self._config.getint(Winch._encoder_section, Winch._a_channel_key)
+            encoder_b_channel = self._config.getint(Winch._encoder_section, Winch._b_channel_key)
+            encoder_inverted = self._config.getboolean(Winch._encoder_section, Winch._reversed_key)
+            encoder_type = self._config.getint(Winch._encoder_section, Winch._type_key)
             self._encoder = Encoder(encoder_a_channel, encoder_b_channel, encoder_inverted, encoder_type)
