@@ -5,6 +5,7 @@ from oi import OI
 from subsystems.drivetrain import Drivetrain
 from subsystems.winch import Winch
 from subsystems.gear_release import GearRelease
+from commands.autonomous_default import AutonomousDefault
 
 
 class MyRobot(wpilib.IterativeRobot):
@@ -18,7 +19,9 @@ class MyRobot(wpilib.IterativeRobot):
         # Schedule the autonomous command
         self.drivetrain.reset_gyro_angle()
         if self.oi.get_auto_choice() == 1:
-            self.autonomous_command = DoNothing(self)
+            self.autonomous_command = AutonomousDefault(self)
+            starting_position = self.oi.get_position()
+            self.autonomous_command.set_match_configuration(starting_position)
         else:
             self.autonomous_command = DoNothing(self)
         self.autonomous_command.start()
