@@ -18,12 +18,17 @@ class AutonomousDefault(CommandGroup):
     _approach_encoder_counts = None
     _approach_encoder_threshold = None
 
+    _starting_position = None
+
     def __init__(self, robot, configfile="/home/lvuser/py/configs/autonomous.ini"):
         super().__init__()
         self._robot = robot
         self._config = configparser.ConfigParser()
         self._config.read(configfile)
         self._init_commands()
+
+    def set_match_configuration(self, starting_position):
+        self._starting_position = starting_position
         self._add_approach_commands()
 
     def _init_commands(self):
@@ -39,6 +44,7 @@ class AutonomousDefault(CommandGroup):
                                                                  self._approach_speed_key,
                                                                  self._approach_encoder_threshold_key),
                                               self._default_timeout)
+        self.addSequential(self._approach_commands)
 
     def initialize(self):
         pass  # Can be overwritten by teams

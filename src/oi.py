@@ -45,6 +45,7 @@ class OI:
     _command_config = None
     _controllers = []
     _auto_program_chooser = None
+    _starting_chooser = None
 
     def __init__(self, robot, configfile='/home/lvuser/py/configs/joysticks.ini', command_config='/home/lvuser/py/configs/commands.ini'):
         self.robot = robot
@@ -107,8 +108,18 @@ class OI:
         self._auto_program_chooser.addObject("Do Nothing", 2)
         SmartDashboard.putData("Autonomous", self._auto_program_chooser)
 
+        self._starting_chooser = SendableChooser()
+        self._starting_chooser.addDefault("1", 1)
+        self._starting_chooser.addObject("2", 2)
+        self._starting_chooser.addObject("3", 3)
+        SmartDashboard.putData("Starting_Position", self._starting_chooser)
+
     def get_auto_choice(self):
         return self._auto_program_chooser.getSelected()
+
+    def get_position(self):
+        value = self._starting_chooser.getSelected()
+        return value
 
     def _init_joystick(self, driver):
         config_section = "JoyConfig" + str(driver)
