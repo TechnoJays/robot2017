@@ -35,7 +35,6 @@ def test_winch_channel_4(robot, hal_data):
     wnch = Winch(robot, None, '../tests/test_configs/winch_channel_4.ini')
     assert wnch is not None
     assert wnch._motor is not None
-    print(hal_data)
     assert hal_data['pwm'][4]['initialized'] is True
     assert hal_data['pwm'][4]['value'] == 0.0
     assert hal_data['pwm'][4]['type'] == 'spark'
