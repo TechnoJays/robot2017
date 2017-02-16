@@ -2,6 +2,8 @@ import configparser
 import wpilib
 from wpilib.smartdashboard import SmartDashboard
 from wpilib.sendablechooser import SendableChooser
+from wpilib.buttons.joystickbutton import JoystickButton
+from commands.release_gear import ReleaseGear
 
 
 class JoystickAxis(object):
@@ -43,12 +45,12 @@ class OI:
     _command_config = None
     _controllers = []
     _auto_program_chooser = None
+    _starting_chooser = None
 
-    def __init__(self, robot, configfile='/home/lvuser/py/configs/joysticks.ini', command_config='/home/lvuser/py/configs/commands.ini'):
+    def __init__(self, robot, configfile='/home/lvuser/py/configs/joysticks.ini'):
         self.robot = robot
         self._config = configparser.ConfigParser()
         self._config.read(configfile)
-        self._command_config = command_config
         self._init_joystick_binding()
 
         for i in range(2):
@@ -57,12 +59,8 @@ class OI:
         self._create_smartdashboard_buttons()
 
     def setup_button_bindings(self):
-        cmdcfg = configparser.ConfigParser()
-        cmdcfg.read(self._command_config)
-        #scoring_right_trigger = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.RIGHTTRIGGER)
-        #scoring_a_button = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.A)
-        #scoring_y_button = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.Y)
-        #scoring_left_trigger = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.LEFTTRIGGER)
+        release_gear_a_button = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.A)
+        release_gear_a_button.whenPressed(ReleaseGear(self.robot))
 
     def get_axis(self, user, axis):
         """Read axis value for specified controller/axis.
@@ -107,8 +105,18 @@ class OI:
         self._auto_program_chooser.addObject("Do Nothing", 2)
         SmartDashboard.putData("Autonomous", self._auto_program_chooser)
 
+        self._starting_chooser = SendableChooser()
+        self._starting_chooser.addDefault("1", 1)
+        self._starting_chooser.addObject("2", 2)
+        self._starting_chooser.addObject("3", 3)
+        SmartDashboard.putData("Starting_Position", self._starting_chooser)
+
     def get_auto_choice(self):
         return self._auto_program_chooser.getSelected()
+
+    def get_position(self):
+        value = self._starting_chooser.getSelected()
+        return value
 
     def _init_joystick(self, driver):
         config_section = "JoyConfig" + str(driver)
