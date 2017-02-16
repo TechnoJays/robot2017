@@ -30,7 +30,6 @@ class GearRelease(Subsystem):
 
     def initDefaultCommand(self):
         self.setDefaultCommand(ReleaseGear(self._robot))
-        pass
 
     def set_gear_release(self, state):
         if self._solenoid:
