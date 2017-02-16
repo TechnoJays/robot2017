@@ -71,3 +71,6 @@ target/
 # PyCharm
 .idea
 
+# installer caches
+opkg_cache/
+
