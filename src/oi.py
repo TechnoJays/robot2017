@@ -63,10 +63,6 @@ class OI:
         cmdcfg.read(self._command_config)
         release_gear_a_button = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.A)
         release_gear_a_button.whenPressed(ReleaseGear(self.robot))
-        #scoring_right_trigger = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.RIGHTTRIGGER)
-        #scoring_a_button = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.A)
-        #scoring_y_button = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.Y)
-        #scoring_left_trigger = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.LEFTTRIGGER)
 
     def get_axis(self, user, axis):
         """Read axis value for specified controller/axis.
