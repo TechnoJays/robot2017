@@ -47,6 +47,7 @@ class MyRobot(wpilib.IterativeRobot):
         self.winch = Winch(self)
         self.gear_release = GearRelease(self)
         self.oi.setup_button_bindings()
+        wpilib.CameraServer.launch()
 
     def autonomousPeriodic(self):
         """This function is called periodically during autonomous."""
