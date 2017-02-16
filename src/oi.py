@@ -4,6 +4,7 @@ from wpilib.smartdashboard import SmartDashboard
 from wpilib.sendablechooser import SendableChooser
 from wpilib.buttons.joystickbutton import JoystickButton
 from commands.release_gear import ReleaseGear
+from commands.move_winch_analog import MoveWinchAnalog
 
 
 class JoystickAxis(object):
