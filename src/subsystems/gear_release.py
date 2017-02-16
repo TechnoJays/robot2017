@@ -1,6 +1,7 @@
 import configparser
 from wpilib.command.subsystem import Subsystem
 from wpilib.solenoid import Solenoid
+from commands.release_gear import ReleaseGear
 
 
 class GearRelease(Subsystem):
@@ -28,8 +29,7 @@ class GearRelease(Subsystem):
         super().__init__(name=name)
 
     def initDefaultCommand(self):
-        # TODO
-        #self.setDefaultCommand(MoveWinchAnalog(self._robot))
+        self.setDefaultCommand(ReleaseGear(self._robot))
         pass
 
     def set_gear_release(self, state):

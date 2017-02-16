@@ -4,6 +4,7 @@ from commands.do_nothing import DoNothing
 from oi import OI
 from subsystems.drivetrain import Drivetrain
 from subsystems.winch import Winch
+from subsystems.gear_release import GearRelease
 
 
 class MyRobot(wpilib.IterativeRobot):
@@ -11,6 +12,7 @@ class MyRobot(wpilib.IterativeRobot):
     drivetrain = None
     winch = None
     autonomous_command = None
+    gear_release = None
 
     def autonomousInit(self):
         # Schedule the autonomous command
@@ -40,6 +42,7 @@ class MyRobot(wpilib.IterativeRobot):
         self.oi = OI(self)
         self.drivetrain = Drivetrain(self)
         self.winch = Winch(self)
+        self.gear_release = GearRelease(self)
         self.oi.setup_button_bindings()
 
     def autonomousPeriodic(self):
