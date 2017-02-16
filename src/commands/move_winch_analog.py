@@ -18,6 +18,7 @@ class MoveWinchAnalog(Command):
         """Called repeatedly when this Command is scheduled to run"""
         move_speed = self.robot.oi.get_axis(UserController.SCORING, JoystickAxis.RIGHTY)
         self.robot.winch.move_winch(move_speed * self.JOYSTICK_LINEAR_SPEED)
+        return Command.execute(self)
 
     def isFinished(self):
         """Returns true when the Command no longer needs to be run"""
@@ -26,7 +27,6 @@ class MoveWinchAnalog(Command):
     def end(self):
         """Called once after isFinished returns true"""
         self.robot.winch.move_winch(0)
-        pass
 
     def interrupted(self):
         """Called when another command which requires one or more of the same subsystems is scheduled to run"""
