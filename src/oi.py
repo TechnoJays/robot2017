@@ -44,7 +44,6 @@ class OI:
     _controllers = []
     _auto_program_chooser = None
 
-    # Config path used to be '/home/lvuser/configs/subsystems.ini'
     def __init__(self, robot, configfile='/home/lvuser/py/configs/joysticks.ini', command_config='/home/lvuser/py/configs/commands.ini'):
         self.robot = robot
         self._config = configparser.ConfigParser()
