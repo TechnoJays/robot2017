@@ -5,9 +5,9 @@ from commands.drive_encoder_counts import DriveEncoderCounts
 
 class AutonomousDefault(CommandGroup):
     _approach_section = "Approach"
-    _approach_speed_key = "EncoderCounts"
-    _approach_encoder_counts_key = "EncoderCounts"
-    _approach_encoder_threshold_key = "EncoderCounts"
+    _approach_speed_key = "APPROACH_SPEED"
+    _approach_encoder_counts_key = "APPROACH_ENCODER_COUNTS"
+    _approach_encoder_threshold_key = "APPROACH_ENCODER_THRESHOLD"
 
     _robot = None
     _config = None
