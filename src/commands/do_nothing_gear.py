@@ -6,7 +6,7 @@ class DoNothingGear(Command):
     def __init__(self, robot, name=None, timeout=None):
         super().__init__(name, timeout)
         self.robot = robot
-        self.requires(robot.gear_release)
+        self.requires(robot.gear_feeder)
 
     def initialize(self):
         """Called before the Command is run for the first time."""

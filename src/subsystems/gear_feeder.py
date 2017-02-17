@@ -4,7 +4,7 @@ from wpilib.solenoid import Solenoid
 from commands.do_nothing_gear import DoNothingGear
 
 
-class GearRelease(Subsystem):
+class GearFeeder(Subsystem):
     """
     Note: The PCM will automatically run in closed loop mode by default whenever a
     Solenoid object is created. For most cases the Compressor object does not
@@ -13,7 +13,7 @@ class GearRelease(Subsystem):
     enable/disable closed loop control.
     """
     # Config file section names
-    _release_section = "GearRelease"
+    _release_section = "GearFeeder"
     _enabled_key = "ENABLED"
     _solenoid_channel_key = "SOLENOID_CHANNEL"
 
@@ -36,6 +36,6 @@ class GearRelease(Subsystem):
             self._solenoid.set(state)
 
     def _init_components(self):
-        if self._config.getboolean(GearRelease._release_section, GearRelease._enabled_key):
-            solenoid_channel = self._config.getint(GearRelease._release_section, GearRelease._solenoid_channel_key)
+        if self._config.getboolean(GearFeeder._release_section, GearFeeder._enabled_key):
+            solenoid_channel = self._config.getint(GearFeeder._release_section, GearFeeder._solenoid_channel_key)
             self._solenoid = Solenoid(solenoid_channel)
