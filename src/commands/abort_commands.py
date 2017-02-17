@@ -9,6 +9,8 @@ class Abort(Command):
         super().__init__(name, timeout)
         self.robot = robot
         self.requires(robot.drivetrain)
+        self.requires(robot.winch)
+        self.requires(robot.gear_release)
 
     def initialize(self):
         """Called before the Command is run for the first time."""
@@ -17,6 +19,8 @@ class Abort(Command):
     def execute(self):
         """Called repeatedly when this Command is scheduled to run"""
         self.robot.drivetrain.arcade_drive(0, 0)
+        self.robot.winch.move_winch(0.0)
+        self.robot.gear_release.set_gear_release(True)
         self._ran_once = True
 
     def isFinished(self):

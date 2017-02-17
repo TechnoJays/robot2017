@@ -1,6 +1,7 @@
 from wpilib.command.command import Command
 
-class MoveWinchAnalog(Command):
+
+class ActivateWinch(Command):
     WINCH_SPEED = 1.0
 
     def __init__(self, robot, name=None, timeout=None):

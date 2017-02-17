@@ -1,5 +1,6 @@
 from wpilib.command.command import Command
 
+
 class DoNothingWinch(Command):
 
     def __init__(self, robot, name=None, timeout=None):

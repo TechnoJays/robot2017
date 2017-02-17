@@ -1,6 +1,7 @@
 import configparser
 from wpilib.command import CommandGroup
 from commands.drive_encoder_counts import DriveEncoderCounts
+from commands.abort_commands import Abort
 
 
 class AutonomousDefault(CommandGroup):
@@ -31,6 +32,9 @@ class AutonomousDefault(CommandGroup):
         self._starting_position = starting_position
         self._add_approach_commands()
 
+        # abort all commands as the last command
+        self.addSequential(Abort(self._robot))
+
     def _init_commands(self):
         self._approach_speed = self._config.getint(AutonomousDefault._approach_section,
                                                    AutonomousDefault._approach_speed_key)
@@ -51,9 +55,7 @@ class AutonomousDefault(CommandGroup):
 
     def end(self):
         """Called once after isFinished returns true"""
-        self._robot.drivetrain.arcade_drive(0, 0)
-        self._robot.winch.move_winch(0.0)
-        self._robot.gear_release.set_gear_release(False)
+        pass
 
     def interrupted(self):
         """Called when another command which requires one or more of the same subsystems is scheduled to run"""

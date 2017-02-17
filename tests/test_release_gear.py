@@ -43,7 +43,7 @@ def test_execute(robot, hal_data, gear_release_default):
     assert rg is not None
     rg.initialize()
     rg.execute()
-    assert hal_data['solenoid'][0]['value'] is True
+    assert hal_data['solenoid'][0]['value'] is False
 
 
 def test_is_finished(command_default):
@@ -61,4 +61,4 @@ def test_end(robot, hal_data, gear_release_default):
     rg.initialize()
     rg.execute()
     rg.end()
-    assert hal_data['solenoid'][0]['value'] is False
+    assert hal_data['solenoid'][0]['value'] is True

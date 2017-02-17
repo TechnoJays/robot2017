@@ -4,7 +4,7 @@ from wpilib.smartdashboard import SmartDashboard
 from wpilib.sendablechooser import SendableChooser
 from wpilib.buttons.joystickbutton import JoystickButton
 from commands.release_gear import ReleaseGear
-from commands.move_winch_analog import MoveWinchAnalog
+from commands.activate_winch import ActivateWinch
 
 
 class JoystickAxis(object):
@@ -63,7 +63,7 @@ class OI:
         release_gear_a_button = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.A)
         release_gear_a_button.whileHeld(ReleaseGear(self.robot))
         release_gear_b_button = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.B)
-        release_gear_b_button.whileHeld(MoveWinchAnalog(self.robot))
+        release_gear_b_button.whileHeld(ActivateWinch(self.robot))
 
     def get_axis(self, user, axis):
         """Read axis value for specified controller/axis.
