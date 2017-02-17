@@ -1,5 +1,4 @@
 from wpilib.command.command import Command
-from oi import UserController, JoystickAxis
 
 
 class MoveWinchAnalog(Command):
