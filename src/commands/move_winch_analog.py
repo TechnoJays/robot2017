@@ -1,6 +1,5 @@
 from wpilib.command.command import Command
 
-
 class MoveWinchAnalog(Command):
     WINCH_SPEED = 1.0
 
