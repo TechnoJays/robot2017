@@ -1,6 +1,4 @@
 from wpilib.command.command import Command
-from oi import UserController, JoystickAxis
-
 
 class MoveWinchAnalog(Command):
     WINCH_SPEED = 1.0
