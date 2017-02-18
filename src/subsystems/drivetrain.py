@@ -3,7 +3,7 @@ from wpilib.command.subsystem import Subsystem
 from wpilib.encoder import Encoder
 from wpilib.robotdrive import RobotDrive
 from wpilib.victorsp import VictorSP
-from wpilib.analoggyro import AnalogGyro
+from wpilib.adxrs450_gyro import ADXRS450_Gyro
 from wpilib.smartdashboard import SmartDashboard
 from commands.tank_drive import TankDrive
 
@@ -23,7 +23,6 @@ class Drivetrain(Subsystem):
     _type_key = "TYPE"
     _channel_key = "CHANNEL"
     _reversed_key = "REVERSED"
-    _sensitivity_key = "SENSITIVITY"
 
     _max_speed = 0
 
@@ -169,11 +168,7 @@ class Drivetrain(Subsystem):
 
         if self._config.getboolean(Drivetrain._gyro_section, Drivetrain._enabled_key):
             gyro_channel = self._config.getint(self._gyro_section, Drivetrain._channel_key)
-            gyro_sensitivity = self._config.getfloat(self._gyro_section, Drivetrain._sensitivity_key)
-            if gyro_channel:
-                self._gyro = AnalogGyro(gyro_channel)
-                if self._gyro and gyro_sensitivity:
-                    self._gyro.setSensitivity(gyro_sensitivity)
+            self._gyro = ADXRS450_Gyro(gyro_channel)
 
         if self._config.getboolean(Drivetrain._left_motor_section, Drivetrain._enabled_key):
             self._left_motor = VictorSP(self._config.getint(self._left_motor_section, Drivetrain._channel_key))
