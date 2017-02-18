@@ -39,13 +39,13 @@ class AutonomousDefault(CommandGroup):
         self.addSequential(Abort(self._robot))
 
     def _init_commands(self):
-        self._approach_speed = self._config.getint(AutonomousDefault._approach_section,
+        self._approach_speed = self._config.getfloat(AutonomousDefault._approach_section,
                                                    AutonomousDefault._approach_speed_key)
         self._approach_encoder_counts = self._config.getint(AutonomousDefault._approach_section,
                                                             AutonomousDefault._approach_encoder_counts_key)
         self._approach_encoder_threshold = self._config.getint(AutonomousDefault._approach_section,
                                                                AutonomousDefault._approach_encoder_threshold_key)
-        self._approach_time = self._config.getint(AutonomousDefault._approach_section,
+        self._approach_time = self._config.getfloat(AutonomousDefault._approach_section,
                                                   AutonomousDefault._approach_time_key)
 
     def _add_approach_commands(self):
