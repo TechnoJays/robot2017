@@ -3,13 +3,14 @@ from oi import JoystickAxis, UserController
 
 
 class TankDrive(Command):
-    DPAD_LINEAR_SPEED = 0.75
 
-    def __init__(self, robot, name=None, timeout=15):
+    def __init__(self, robot, name=None, stick_scaling=1, dpad_scaling=0.5, timeout=15):
         """Constructor"""
         super().__init__(name, timeout)
         self.robot = robot
         self.requires(robot.drivetrain)
+        self._dpad_scaling = dpad_scaling
+        self._stick_scaling = stick_scaling
 
     def initialize(self):
         """Called before the Command is run for the first time."""
@@ -19,11 +20,11 @@ class TankDrive(Command):
         """Called repeatedly when this Command is scheduled to run"""
         dpad_y = self.robot.oi.get_axis(UserController.DRIVER, JoystickAxis.DPADY)
         if dpad_y != 0.0:
-            self.robot.drivetrain.arcade_drive(self.DPAD_LINEAR_SPEED * dpad_y, 0.0)
+            self.robot.drivetrain.arcade_drive(self._dpad_scaling * dpad_y, 0.0)
         else:
             left_track = self.robot.oi.get_axis(UserController.DRIVER, JoystickAxis.LEFTY)
             right_track = self.robot.oi.get_axis(UserController.DRIVER, JoystickAxis.RIGHTY)
-            self.robot.drivetrain.tank_drive(left_track, right_track)
+            self.robot.drivetrain.tank_drive(self._stick_scaling * left_track, self._stick_scaling * right_track)
         return Command.execute(self)
 
     def isFinished(self):
