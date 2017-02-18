@@ -5,7 +5,6 @@ from wpilib.sendablechooser import SendableChooser
 from wpilib.buttons.joystickbutton import JoystickButton
 from commands.release_gear import ReleaseGear
 from commands.activate_winch import ActivateWinch
-from commands.tank_drive import TankDrive
 
 
 class JoystickAxis(object):
@@ -65,8 +64,6 @@ class OI:
         release_gear_a_button.whileHeld(ReleaseGear(self.robot))
         release_gear_b_button = JoystickButton(self._controllers[UserController.SCORING], JoystickButtons.B)
         release_gear_b_button.whileHeld(ActivateWinch(self.robot))
-        slow_ride_rt_button = JoystickButton(self._controllers[UserController.DRIVER], JoystickButtons.RIGHTTRIGGER)
-        slow_ride_rt_button.whileHeld(TankDrive(self.robot, stick_scaling=0.5, dpad_scaling=0.25))
 
     def get_axis(self, user, axis):
         """Read axis value for specified controller/axis.
@@ -104,6 +101,9 @@ class OI:
                 value = 0.0
 
         return value
+
+    def get_button_state(self, user, button):
+        return self._controllers[user].getRawButton(button)
 
     def _create_smartdashboard_buttons(self):
         self._auto_program_chooser = SendableChooser()
