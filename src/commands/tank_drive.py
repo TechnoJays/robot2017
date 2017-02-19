@@ -1,15 +1,16 @@
 from wpilib.command.command import Command
-from oi import JoystickAxis, UserController
+from oi import JoystickAxis, UserController, JoystickButtons
 
 
 class TankDrive(Command):
-    DPAD_LINEAR_SPEED = 0.75
 
-    def __init__(self, robot, name=None, timeout=15):
+    def __init__(self, robot, name=None, modifier_scaling=0.5, dpad_scaling=0.4, timeout=15):
         """Constructor"""
         super().__init__(name, timeout)
         self.robot = robot
         self.requires(robot.drivetrain)
+        self._dpad_scaling = dpad_scaling
+        self._stick_scaling = modifier_scaling
 
     def initialize(self):
         """Called before the Command is run for the first time."""
@@ -17,13 +18,17 @@ class TankDrive(Command):
 
     def execute(self):
         """Called repeatedly when this Command is scheduled to run"""
+        modifier = self.robot.oi.get_button_state(UserController.DRIVER, JoystickButtons.RIGHTTRIGGER)
         dpad_y = self.robot.oi.get_axis(UserController.DRIVER, JoystickAxis.DPADY)
         if dpad_y != 0.0:
-            self.robot.drivetrain.arcade_drive(self.DPAD_LINEAR_SPEED * dpad_y, 0.0)
+            self.robot.drivetrain.arcade_drive(self._dpad_scaling * dpad_y, 0.0)
         else:
             left_track = self.robot.oi.get_axis(UserController.DRIVER, JoystickAxis.LEFTY)
             right_track = self.robot.oi.get_axis(UserController.DRIVER, JoystickAxis.RIGHTY)
-            self.robot.drivetrain.tank_drive(left_track, right_track)
+            if modifier:
+                self.robot.drivetrain.tank_drive(self._stick_scaling * left_track, self._stick_scaling * right_track)
+            else:
+                self.robot.drivetrain.tank_drive(left_track, right_track)
         return Command.execute(self)
 
     def isFinished(self):

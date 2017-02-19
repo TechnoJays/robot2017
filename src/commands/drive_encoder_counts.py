@@ -31,10 +31,13 @@ class DriveEncoderCounts(Command):
         current = self.robot.drivetrain.get_encoder_value()
         distance_left = self._target_position - current
         # Determine direction using target and current encoder values
-        direction = -1.0 if distance_left >= 0 else direction = 1.0
+        if distance_left >= 0:
+            direction = -1.0
+        else:
+            direction = 1.0
         linear_drive_amount = self._speed * direction
         # Set drivetrain using speed and direction
-        self.robot.drivetrain.arcade_drive(linear_drive_amount, 0.0)
+        self.robot.drivetrain.arcade_drive(linear_drive_amount, 0.0, False)
         return Command.execute(self)
 
     def isFinished(self):
