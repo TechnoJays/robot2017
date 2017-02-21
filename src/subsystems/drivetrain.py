@@ -63,20 +63,6 @@ class Drivetrain(Subsystem):
     def initDefaultCommand(self):
         self.setDefaultCommand(TankDrive(self._robot, self._robot.oi))
 
-    def tank_drive(self, left_speed, right_speed):
-        left = left_speed * self._max_speed
-        right = right_speed * self._max_speed
-        self._robot_drive.tankDrive(left, right, False)
-        self._update_smartdashboard_tank_drive(left_speed, right_speed)
-        self.get_gyro_angle()
-        self.get_left_encoder_value()
-        self.get_right_encoder_value()
-        self._update_smartdashboard_sensors()
-
-    def _update_smartdashboard_tank_drive(self, left, right):
-        SmartDashboard.putNumber("Drivetrain Left Speed", left)
-        SmartDashboard.putNumber("Drivetrain Right Speed", right)
-
     def get_left_encoder_value(self):
         if self._left_encoder:
             self._left_encoder_count = self._left_encoder.get()
@@ -127,6 +113,22 @@ class Drivetrain(Subsystem):
         self._update_smartdashboard_sensors()
         return self._gyro_angle
 
+    def is_encoder_enabled(self):
+        return self._left_encoder is not None or self._right_encoder is not None
+
+    def is_gyro_enabled(self):
+        return self._gyro is not None
+
+    def tank_drive(self, left_speed, right_speed):
+        left = left_speed * self._max_speed
+        right = right_speed * self._max_speed
+        self._robot_drive.tankDrive(left, right, False)
+        self._update_smartdashboard_tank_drive(left_speed, right_speed)
+        self.get_gyro_angle()
+        self.get_left_encoder_value()
+        self.get_right_encoder_value()
+        self._update_smartdashboard_sensors()
+
     def arcade_drive(self, linear_distance, turn_angle, squared_inputs=True):
         if self._robot_drive:
             self._robot_drive.arcadeDrive(linear_distance, turn_angle, squared_inputs)
@@ -135,6 +137,10 @@ class Drivetrain(Subsystem):
         self.get_left_encoder_value()
         self.get_right_encoder_value()
         self._update_smartdashboard_sensors()
+
+    def _update_smartdashboard_tank_drive(self, left, right):
+        SmartDashboard.putNumber("Drivetrain Left Speed", left)
+        SmartDashboard.putNumber("Drivetrain Right Speed", right)
 
     def _update_smartdashboard_arcade_drive(self, linear, turn):
         SmartDashboard.putNumber("Drivetrain Linear Speed", linear)
