@@ -113,9 +113,9 @@ class OI:
         SmartDashboard.putData("Autonomous", self._auto_program_chooser)
 
         self._starting_chooser = SendableChooser()
-        self._starting_chooser.addDefault("1", 1)
-        self._starting_chooser.addObject("2", 2)
-        self._starting_chooser.addObject("3", 3)
+        self._starting_chooser.addDefault("Left", 1)
+        self._starting_chooser.addObject("Center", 2)
+        self._starting_chooser.addObject("Right", 3)
         SmartDashboard.putData("Starting_Position", self._starting_chooser)
 
     def get_auto_choice(self):
