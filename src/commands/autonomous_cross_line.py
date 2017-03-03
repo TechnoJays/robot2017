@@ -104,6 +104,8 @@ class AutonomousCrossLine(CommandGroup):
 
     def _add_approach_commands(self, use_encoder=False, use_gyro=False):
         approach_commands = CommandGroup()
+        approach_commands.addSequential(DriveTime(self._robot, 5, 0),
+                                            self._default_timeout)
         # Drive up to the tower, just before the line
         if use_encoder:
             approach_commands.addSequential(DriveEncoderCounts(self._robot, self._approach_encoder_counts,
