@@ -3,7 +3,7 @@ from wpilib.command.subsystem import Subsystem
 from wpilib.encoder import Encoder
 from wpilib.smartdashboard import SmartDashboard
 from wpilib.spark import Spark
-from commands.do_nothing_winch import DoNothingWinch
+from commands.move_winch import MoveWinch
 
 
 class Winch(Subsystem):
@@ -34,7 +34,7 @@ class Winch(Subsystem):
         super().__init__(name=name)
 
     def initDefaultCommand(self):
-        self.setDefaultCommand(DoNothingWinch(self._robot))
+        self.setDefaultCommand(MoveWinch(self._robot))
 
     def move_winch(self, speed):
         if self._motor:
