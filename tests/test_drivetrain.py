@@ -31,6 +31,8 @@ def test_drivetrain_default(drivetrain_default, hal_data):
     assert drivetrain_default._left_motor is not None
     assert drivetrain_default._right_motor is not None
     assert drivetrain_default._robot_drive is not None
+    assert drivetrain_default.is_encoder_enabled() is True
+    assert drivetrain_default.is_gyro_enabled() is True
 
 
 def test_drivetrain_channels_0_1(hal_data, robot):

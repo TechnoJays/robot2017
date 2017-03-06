@@ -5,7 +5,8 @@ from oi import OI
 from subsystems.drivetrain import Drivetrain
 from subsystems.winch import Winch
 from subsystems.gear_feeder import GearFeeder
-from commands.autonomous_default import AutonomousDefault
+from commands.autonomous_cross_line import AutonomousCrossLine
+from commands.autonomous_hang_gear import AutonomousHangGear
 
 
 class MyRobot(wpilib.IterativeRobot):
@@ -18,9 +19,12 @@ class MyRobot(wpilib.IterativeRobot):
     def autonomousInit(self):
         # Schedule the autonomous command
         self.drivetrain.reset_gyro_angle()
+        starting_position = self.oi.get_position()
         if self.oi.get_auto_choice() == 1:
-            self.autonomous_command = AutonomousDefault(self)
-            starting_position = self.oi.get_position()
+            self.autonomous_command = AutonomousCrossLine(self)
+            self.autonomous_command.set_match_configuration(starting_position)
+        elif self.oi.get_auto_choice() == 2:
+            self.autonomous_command = AutonomousHangGear(self)
             self.autonomous_command.set_match_configuration(starting_position)
         else:
             self.autonomous_command = DoNothing(self)

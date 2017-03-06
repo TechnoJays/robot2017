@@ -3,7 +3,7 @@ from wpilib.command.subsystem import Subsystem
 from wpilib.encoder import Encoder
 from wpilib.robotdrive import RobotDrive
 from wpilib.victorsp import VictorSP
-from wpilib.analoggyro import AnalogGyro
+from wpilib.adxrs450_gyro import ADXRS450_Gyro
 from wpilib.smartdashboard import SmartDashboard
 from commands.tank_drive import TankDrive
 
@@ -23,7 +23,9 @@ class Drivetrain(Subsystem):
     _type_key = "TYPE"
     _channel_key = "CHANNEL"
     _reversed_key = "REVERSED"
-    _sensitivity_key = "SENSITIVITY"
+    _max_speed_key = "MAX_SPEED"
+    _modifier_scaling_key = "MODIFIER_SCALING"
+    _dpad_scaling_key = "DPAD_SCALING"
 
     _max_speed = 0
 
@@ -48,6 +50,9 @@ class Drivetrain(Subsystem):
     _right_encoder_type = None
     _right_encoder_count = 0
 
+    _modifier_scaling = None
+    _dpad_scaling = None
+
     _gyro = None
     _gyro_angle = 0.0
 
@@ -62,21 +67,8 @@ class Drivetrain(Subsystem):
         super().__init__(name=name)
 
     def initDefaultCommand(self):
-        self.setDefaultCommand(TankDrive(self._robot, self._robot.oi))
-
-    def tank_drive(self, left_speed, right_speed):
-        left = left_speed * self._max_speed
-        right = right_speed * self._max_speed
-        self._robot_drive.tankDrive(left, right, False)
-        self._update_smartdashboard_tank_drive(left_speed, right_speed)
-        self.get_gyro_angle()
-        self.get_left_encoder_value()
-        self.get_right_encoder_value()
-        self._update_smartdashboard_sensors()
-
-    def _update_smartdashboard_tank_drive(self, left, right):
-        SmartDashboard.putNumber("Drivetrain Left Speed", left)
-        SmartDashboard.putNumber("Drivetrain Right Speed", right)
+        self.setDefaultCommand(TankDrive(self._robot, self._robot.oi, modifier_scaling=self._modifier_scaling,
+                                         dpad_scaling=self._dpad_scaling))
 
     def get_left_encoder_value(self):
         if self._left_encoder:
@@ -128,6 +120,22 @@ class Drivetrain(Subsystem):
         self._update_smartdashboard_sensors()
         return self._gyro_angle
 
+    def is_encoder_enabled(self):
+        return self._left_encoder is not None or self._right_encoder is not None
+
+    def is_gyro_enabled(self):
+        return self._gyro is not None
+
+    def tank_drive(self, left_speed, right_speed):
+        left = left_speed * self._max_speed
+        right = right_speed * self._max_speed
+        self._robot_drive.tankDrive(left, right, False)
+        self._update_smartdashboard_tank_drive(left_speed, right_speed)
+        self.get_gyro_angle()
+        self.get_left_encoder_value()
+        self.get_right_encoder_value()
+        self._update_smartdashboard_sensors()
+
     def arcade_drive(self, linear_distance, turn_angle, squared_inputs=True):
         if self._robot_drive:
             self._robot_drive.arcadeDrive(linear_distance, turn_angle, squared_inputs)
@@ -136,6 +144,10 @@ class Drivetrain(Subsystem):
         self.get_left_encoder_value()
         self.get_right_encoder_value()
         self._update_smartdashboard_sensors()
+
+    def _update_smartdashboard_tank_drive(self, left, right):
+        SmartDashboard.putNumber("Drivetrain Left Speed", left)
+        SmartDashboard.putNumber("Drivetrain Right Speed", right)
 
     def _update_smartdashboard_arcade_drive(self, linear, turn):
         SmartDashboard.putNumber("Drivetrain Linear Speed", linear)
@@ -147,7 +159,9 @@ class Drivetrain(Subsystem):
         SmartDashboard.putNumber("Gyro Angle", self._gyro_angle)
 
     def _init_components(self):
-        self._max_speed = self._config.getfloat(self._general_section, "MAX_SPEED")
+        self._max_speed = self._config.getfloat(self._general_section, Drivetrain._max_speed_key)
+        self._modifier_scaling = self._config.getfloat(self._general_section, Drivetrain._modifier_scaling_key)
+        self._dpad_scaling = self._config.getfloat(self._general_section, Drivetrain._dpad_scaling_key)
 
         if self._config.getboolean(Drivetrain._left_encoder_section, Drivetrain._enabled_key):
             self._left_encoder_a_channel = self._config.getint(self._left_encoder_section, Drivetrain._a_channel_key)
@@ -169,11 +183,7 @@ class Drivetrain(Subsystem):
 
         if self._config.getboolean(Drivetrain._gyro_section, Drivetrain._enabled_key):
             gyro_channel = self._config.getint(self._gyro_section, Drivetrain._channel_key)
-            gyro_sensitivity = self._config.getfloat(self._gyro_section, Drivetrain._sensitivity_key)
-            if gyro_channel:
-                self._gyro = AnalogGyro(gyro_channel)
-                if self._gyro and gyro_sensitivity:
-                    self._gyro.setSensitivity(gyro_sensitivity)
+            self._gyro = ADXRS450_Gyro(gyro_channel)
 
         if self._config.getboolean(Drivetrain._left_motor_section, Drivetrain._enabled_key):
             self._left_motor = VictorSP(self._config.getint(self._left_motor_section, Drivetrain._channel_key))

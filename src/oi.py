@@ -107,14 +107,15 @@ class OI:
 
     def _create_smartdashboard_buttons(self):
         self._auto_program_chooser = SendableChooser()
-        self._auto_program_chooser.addDefault("Default", 1)
-        self._auto_program_chooser.addObject("Do Nothing", 2)
+        self._auto_program_chooser.addDefault("Cross Line", 1)
+        self._auto_program_chooser.addObject("Hang Gear", 2)
+        self._auto_program_chooser.addObject("Do Nothing", 3)
         SmartDashboard.putData("Autonomous", self._auto_program_chooser)
 
         self._starting_chooser = SendableChooser()
-        self._starting_chooser.addDefault("1", 1)
-        self._starting_chooser.addObject("2", 2)
-        self._starting_chooser.addObject("3", 3)
+        self._starting_chooser.addDefault("Left", 1)
+        self._starting_chooser.addObject("Center", 2)
+        self._starting_chooser.addObject("Right", 3)
         SmartDashboard.putData("Starting_Position", self._starting_chooser)
 
     def get_auto_choice(self):
