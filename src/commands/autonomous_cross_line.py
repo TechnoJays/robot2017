@@ -13,6 +13,7 @@ class AutonomousCrossLine(CommandGroup):
     _approach_encoder_counts_key = "APPROACH_ENCODER_COUNTS"
     _approach_encoder_threshold_key = "APPROACH_ENCODER_THRESHOLD"
     _approach_time_key = "APPROACH_TIME"
+    _initial_wait_time_key = "INITIAL_WAIT_TIME"
 
     _cross_section = "Cross"
     _cross_encoder_threshold_key = "CROSS_ENCODER_THRESHOLD"
@@ -39,6 +40,7 @@ class AutonomousCrossLine(CommandGroup):
     _approach_encoder_counts = None
     _approach_encoder_threshold = None
     _approach_time = None
+    _initial_wait_time = None
 
     _cross_encoder_threshold = None
     _cross_angle_threshold = None
@@ -78,6 +80,8 @@ class AutonomousCrossLine(CommandGroup):
                                                                AutonomousCrossLine._approach_encoder_threshold_key)
         self._approach_time = self._config.getfloat(AutonomousCrossLine._approach_section,
                                                     AutonomousCrossLine._approach_time_key)
+        self._initial_wait_time = self._config.getfloat(AutonomousCrossLine._approach_section,
+                                                        AutonomousCrossLine._initial_wait_time_key)
 
         self._cross_encoder_threshold = self._config.getint(AutonomousCrossLine._cross_section,
                                                             AutonomousCrossLine._cross_encoder_threshold_key)
@@ -104,8 +108,7 @@ class AutonomousCrossLine(CommandGroup):
 
     def _add_approach_commands(self, use_encoder=False, use_gyro=False):
         approach_commands = CommandGroup()
-        approach_commands.addSequential(DriveTime(self._robot, 5, 0),
-                                            self._default_timeout)
+        approach_commands.addSequential(DriveTime(self._robot, self._initial_wait_time, 0.0), self._default_timeout)
         # Drive up to the tower, just before the line
         if use_encoder:
             approach_commands.addSequential(DriveEncoderCounts(self._robot, self._approach_encoder_counts,

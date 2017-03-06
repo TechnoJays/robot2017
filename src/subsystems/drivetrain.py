@@ -23,6 +23,9 @@ class Drivetrain(Subsystem):
     _type_key = "TYPE"
     _channel_key = "CHANNEL"
     _reversed_key = "REVERSED"
+    _max_speed_key = "MAX_SPEED"
+    _modifier_scaling_key = "MODIFIER_SCALING"
+    _dpad_scaling_key = "DPAD_SCALING"
 
     _max_speed = 0
 
@@ -47,6 +50,9 @@ class Drivetrain(Subsystem):
     _right_encoder_type = None
     _right_encoder_count = 0
 
+    _modifier_scaling = None
+    _dpad_scaling = None
+
     _gyro = None
     _gyro_angle = 0.0
 
@@ -61,7 +67,8 @@ class Drivetrain(Subsystem):
         super().__init__(name=name)
 
     def initDefaultCommand(self):
-        self.setDefaultCommand(TankDrive(self._robot, self._robot.oi))
+        self.setDefaultCommand(TankDrive(self._robot, self._robot.oi, modifier_scaling=self._modifier_scaling,
+                                         dpad_scaling=self._dpad_scaling))
 
     def get_left_encoder_value(self):
         if self._left_encoder:
@@ -152,7 +159,9 @@ class Drivetrain(Subsystem):
         SmartDashboard.putNumber("Gyro Angle", self._gyro_angle)
 
     def _init_components(self):
-        self._max_speed = self._config.getfloat(self._general_section, "MAX_SPEED")
+        self._max_speed = self._config.getfloat(self._general_section, Drivetrain._max_speed_key)
+        self._modifier_scaling = self._config.getfloat(self._general_section, Drivetrain._modifier_scaling_key)
+        self._dpad_scaling = self._config.getfloat(self._general_section, Drivetrain._dpad_scaling_key)
 
         if self._config.getboolean(Drivetrain._left_encoder_section, Drivetrain._enabled_key):
             self._left_encoder_a_channel = self._config.getint(self._left_encoder_section, Drivetrain._a_channel_key)
