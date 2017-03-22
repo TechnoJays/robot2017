@@ -6,7 +6,7 @@ from subsystems.drivetrain import Drivetrain
 from subsystems.winch import Winch
 from subsystems.gear_feeder import GearFeeder
 from commands.autonomous_cross_line import AutonomousCrossLine
-from commands.autonomous_hang_gear import AutonomousHangGear
+from commands.autonomous_hang_center import AutonomousHangCenter
 
 
 class MyRobot(wpilib.IterativeRobot):
@@ -24,7 +24,7 @@ class MyRobot(wpilib.IterativeRobot):
             self.autonomous_command = AutonomousCrossLine(self)
             self.autonomous_command.set_match_configuration(starting_position)
         elif self.oi.get_auto_choice() == 2:
-            self.autonomous_command = AutonomousHangGear(self)
+            self.autonomous_command = AutonomousHangCenter(self)
             self.autonomous_command.set_match_configuration(starting_position)
         else:
             self.autonomous_command = DoNothing(self)
